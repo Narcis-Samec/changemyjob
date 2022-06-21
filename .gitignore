@@ -1,0 +1,8 @@
+# dependencies
+/BE/node_modules
+
+# production
+/build
+
+# misc
+/BE/.env
