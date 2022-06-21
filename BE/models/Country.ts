@@ -51,5 +51,5 @@ const CountrySchema = new Schema<ICountry>({
     },
 });
 
-const CountryModel = model("users", CountrySchema)
-module.exports = CountryModel
+const CountryModel = model("countries", CountrySchema)
+export = CountryModel
