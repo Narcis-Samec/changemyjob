@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import CountryModel from "../../models/Country"
+import CountryModel from "../../models/CountryModel"
 
 const router = Router();
 

@@ -3,8 +3,14 @@ import { Request, Response } from 'express';
 import 'dotenv/config'
 import mongoose from "mongoose";
 import glob from "glob";
+import cookieParser from "cookie-parser"
 
 const APP = express();
+
+//middleware
+APP.use(express.urlencoded({ extended: true }))
+APP.use(express.json())
+APP.use(cookieParser())
 
 //route bundeling
 glob("./routes/**/*ts", (err: Error, files: Array<string>) => {
