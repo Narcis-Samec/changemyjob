@@ -1,9 +1,9 @@
 
 import jwt from "jsonwebtoken"
-import UserModel from "../models/UserModel"
+import  UserModel, { Role }  from "../models/UserModel"
 import { Types } from 'mongoose';
 
-class Auth {
+export default class Auth {
     public static maxDuration = 259200; //in seconds - 259200 = 3 days
 
     public static createToken(_id: Types.ObjectId): string | void {
@@ -12,7 +12,7 @@ class Auth {
         })
     }
 
-    public static requireAuth(req: { cookies: { jwt: string | void; }; }, res: { redirect: (arg0: string) => void; }, next: () => void) {
+    public static requireAuthetication(req: { cookies: { jwt: string | void; }; }, res: { redirect: (arg0: string) => void; locals: { user: typeof UserModel; }; } , next: () => void) {
         const TOKEN = req.cookies.jwt;
 
         if(TOKEN) {
@@ -47,8 +47,21 @@ class Auth {
             res.locals.user = null;
             next();
         }
+    }
 
+    public static requireAuthorization(authLevel: Role) {
+        const ROLES: Role[] = ["creator", "administrator", "leadAnalyst", "analyst", "user"]
+        const LEVELS = ROLES.reduce((result: object, key: Role) => ({ ...result, [key]:  ROLES.slice( ROLES.indexOf(key) )}), {}) 
+        
+        return (req, res, next) => {
+            
+            if(LEVELS[res.locals.user.role].includes(authLevel)) {
+                res.json("user Authorized")
+            } else {
+                res.json("not authorized")
+            }
+
+            next();
+        }
     }
 }
-
-export default Auth;

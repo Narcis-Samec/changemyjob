@@ -8,7 +8,7 @@ const handleErrors = (err: any) => {
     console.error(`\x1b[31m[DB]:error code:${err.code}`)
 }
 
-class UserController {
+export default class UserController {
 
     public static async registerUser(req: any, res: any) {
         const { name, surname, email, password, role, language } = req.body
@@ -47,5 +47,3 @@ class UserController {
         res.redirect("/")
     }
 }
-
-export default UserController

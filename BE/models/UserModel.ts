@@ -3,13 +3,15 @@ import validator from "validator"
 import bcryt from "bcryptjs"
 import { Types } from 'mongoose';
 
+export type Role = "creator" | "administrator" | "leadAnalyst" | "analyst" | "user";
+
 interface IUserSchema {
     _id?: Types.ObjectId;
     name: string;
     surname: string;
     email: string;
     password: string
-    role: string;
+    role: Role;
     language: string,
     registrationDate: Date,
     __v?: number;
@@ -82,4 +84,4 @@ UserSchema.statics.login = async function (email: string, password: string) {
 }
 
 const UserModel = model<IUserSchema, IUserModel>("user", UserSchema)
-export = UserModel
+export default UserModel 
