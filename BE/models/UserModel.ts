@@ -1,13 +1,17 @@
 import { Model, Schema, model } from 'mongoose';
 import validator from "validator"
 import bcryt from "bcryptjs"
+import { Types } from 'mongoose';
 
 interface IUserSchema {
-    _id?: string;
+    _id?: Types.ObjectId;
     name: string;
     surname: string;
     email: string;
     password: string
+    role: string;
+    language: string,
+    registrationDate: Date,
     __v?: number;
 }
 
@@ -15,7 +19,7 @@ interface IUserModel extends Model<IUserSchema> {
     login(email: string, password: string): any;
 }
 
-const HumanUserSchema = new Schema<IUserSchema>({
+const UserSchema = new Schema<IUserSchema>({
     name: {
         type: String,
         required: [true, "Name is invalid or empty"],
@@ -39,6 +43,18 @@ const HumanUserSchema = new Schema<IUserSchema>({
         required: [true, "Password is invalid or empty"],
         trim: true,
     },
+    role: {
+        type: String, enum: ['creator', 'administrator', 'leadAnalyst', 'analyst', 'user'],
+        required: [true, "Role is invalid or empty"],
+    },
+    language: {
+        type: String, enum: ['cs', 'en'],
+        required: [true, "Language is invalid or empty"],
+    },
+    registrationDate: {
+        type: Date,
+        required: true
+    }
 },
     {
         timestamps: true,
@@ -46,14 +62,14 @@ const HumanUserSchema = new Schema<IUserSchema>({
 )
 
 //password hashing
-HumanUserSchema.pre("save", async function (next) {
+UserSchema.pre("save", async function (next) {
     const SALT = await bcryt.genSalt();
     this.password = await bcryt.hash(this.password, SALT)
     next();
 })
 
 //login
-HumanUserSchema.statics.login = async function (email: string, password: string) {
+UserSchema.statics.login = async function (email: string, password: string) {
     const USER = await this.findOne({ email })
     if (USER) {
         const AUTH = await bcryt.compare(password, USER.password)
@@ -65,5 +81,5 @@ HumanUserSchema.statics.login = async function (email: string, password: string)
     throw Error("Incorect email")
 }
 
-const UserModel = model<IUserSchema, IUserModel>("user", HumanUserSchema)
+const UserModel = model<IUserSchema, IUserModel>("user", UserSchema)
 export = UserModel

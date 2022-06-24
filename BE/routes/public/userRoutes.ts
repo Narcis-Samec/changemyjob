@@ -8,3 +8,4 @@ router.post('/api/public/userLogin', UserController.loginUser )
 router.get('/api/public/userLogout', UserController.logoutUser )
 
 module.exports = router;
+export default router;

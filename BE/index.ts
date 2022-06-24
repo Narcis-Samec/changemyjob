@@ -4,6 +4,7 @@ import 'dotenv/config'
 import mongoose from "mongoose";
 import glob from "glob";
 import cookieParser from "cookie-parser"
+import Auth from './middleware/Auth';
 
 const APP = express();
 
@@ -11,9 +12,11 @@ const APP = express();
 APP.use(express.urlencoded({ extended: true }))
 APP.use(express.json())
 APP.use(cookieParser())
+APP.get("*", Auth.chcekUser)
+APP.patch("*", Auth.chcekUser)
 
 //route bundeling
-glob("./routes/**/*ts", (err: Error, files: Array<string>) => {
+glob("./routes/**/*ts", (err, files) => {
   if (err) throw err;
   files.forEach(file => APP.use(require(file)))
 })
@@ -21,7 +24,7 @@ glob("./routes/**/*ts", (err: Error, files: Array<string>) => {
 mongoose.connect("mongodb+srv://user123:Password123*@cluster0.2cqegnk.mongodb.net/Mern?retryWrites=true&w=majority")
 
 APP.get('/', (req: Request, res: Response) => {
-  res.send('APPlication worksddd!');
+  res.send('Application is running');
 });
 
 APP.listen(process.env.PORT, () => {

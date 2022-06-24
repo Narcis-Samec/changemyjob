@@ -5,6 +5,10 @@
       "outDir": "./dist",
       "rootDir": "./",
       "baseUrl": "./",
-      "esModuleInterop": true
+      "esModuleInterop": true,
+    },
+    "exclude": ["./coverage", "./dist", "__tests__", "jest.config.js"],
+    "ts-node": {
+      "transpileOnly": true,
     }
-  }
+}

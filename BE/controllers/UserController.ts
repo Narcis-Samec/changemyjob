@@ -1,5 +1,6 @@
 import UserModel from "../models/UserModel"
-import Auth from "../middleware/auth"
+import UserSpecificsModel from "../models/UserSpecificsModel"
+import Auth from "../middleware/Auth"
 
 //handle errors
 const handleErrors = (err: any) => {
@@ -9,37 +10,39 @@ const handleErrors = (err: any) => {
 
 class UserController {
 
-    public static async registerUser(req, res) {
-        const { name, surname, email, password } = req.body
+    public static async registerUser(req: any, res: any) {
+        const { name, surname, email, password, role, language } = req.body
 
         try {
-            const USER = await UserModel.create({name, surname, email, password})
-            const token = Auth.createToken(USER._id)
-            res.cookie("jwt", token, { httpOnly: true, maxAge: Auth.maxDuration * 1000 })
-            res.status(201).json(USER._id)
+            const USER = await UserModel.create({name, surname, email, password, role, language, registrationDate: new Date()})
+            const USERDATA =  await ( await UserSpecificsModel.create({userId: USER._id, salary: 0})).save()
+            const TOKEN = Auth.createToken(USER._id)
+            res.cookie("jwt", TOKEN, { httpOnly: true, maxAge: Auth.maxDuration * 1000 })
+            res.status(201).json({userID: USER._id, userDataId: USERDATA._id})
         }
-        catch (err: unknown) {
+        catch (err: any | unknown) {
             handleErrors(err)
-            res.status(400).send(err)
+            res.status(400).json(err)
         }
     }
 
-    public static async loginUser(req, res) {
+    public static async loginUser(req: any, res: any) {
         const { email, password } = req.body
 
         try {
             const USER = await UserModel.login(email, password)
-            const token = Auth.createToken(USER._id)
-            res.cookie("jwt", token, { httpOnly: true, maxAge: Auth.maxDuration * 1000 })
+            const TOKEN = Auth.createToken(USER._id)
+            res.cookie("jwt", TOKEN, { httpOnly: true, maxAge: Auth.maxDuration * 1000 })
             res.status(200).json({user: USER._id})
         }
-        catch (err: unknown) {
+        catch (err: any | unknown) {
             handleErrors(err)
-            res.status(400).send(err)
+            console.log(err)
+            res.status(403).json(err)
         }
     }
 
-    public static async logoutUser(req, res) {
+    public static async logoutUser(req: any, res: any) {
         res.cookie("jwt", null, { maxAge: 1 })
         res.redirect("/")
     }
