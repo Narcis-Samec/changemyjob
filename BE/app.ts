@@ -4,6 +4,7 @@ import createServer from "./utils/server"
 
 const app = createServer()
 
+/* istanbul ignore next */ 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(process.env.PORT, () => {
     console.log(`\x1b[36m\[server]: DB status:\x1b[33m ${mongoose.connection.readyState}`)

@@ -24,6 +24,7 @@ export default function createServer() {
       });
 
     //DB
+    /* istanbul ignore next */ 
     if (process.env.NODE_ENV !== 'test') {
         mongoose.connect("mongodb+srv://user123:Password123*@cluster0.2cqegnk.mongodb.net/Mern?retryWrites=true&w=majority")
     }
