@@ -6,8 +6,13 @@
       "rootDir": "./",
       "baseUrl": "./",
       "esModuleInterop": true,
+      "skipLibCheck": true,
+      "types": [
+        "jest",
+        "node"
+      ]
     },
-    "exclude": ["./coverage", "./dist", "__tests__", "jest.config.js"],
+    "exclude": [],
     "ts-node": {
       "transpileOnly": true,
     }
