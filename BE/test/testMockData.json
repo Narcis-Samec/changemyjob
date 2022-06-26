@@ -1,0 +1,20 @@
+{
+    "users": [
+        {
+            "name": "Max",
+            "surname": "Hetero",
+            "email": "max.hetero@email.com",
+            "password": "Alfasamec69",
+            "role": "creator",
+            "language": "cs"
+        },
+        {
+            "name": "Narcis",
+            "surname": "Samec",
+            "email": "n.samec@email.cz",
+            "password": "Kanec420",
+            "role": "user",
+            "language": "en"
+        }
+    ]
+}

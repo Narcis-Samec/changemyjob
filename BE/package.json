@@ -7,7 +7,7 @@
     "start": "nodemon ./app.ts",
     "start:nodemon": "./node_modules/nodemon/bin/nodemon.js",
     "start:prod": "npm run build && node ./dist/app.js",
-    "test": "jest --detectOpenHandles --coverage",
+    "test": "jest --detectOpenHandles --coverage --verbose",
     "test:watch": "NODE_ENV=test jest --watch",
     "build": "npx tsc"
   },
