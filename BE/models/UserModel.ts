@@ -63,7 +63,7 @@ const UserSchema = new Schema<IUserSchema>({
     }
 )
 
-//password hashing
+//password hashing - for one user
 UserSchema.pre("save", async function (next) {
     const SALT = await bcryt.genSalt();
     this.password = await bcryt.hash(this.password, SALT)
@@ -78,9 +78,8 @@ UserSchema.statics.login = async function (email: string, password: string) {
         if (AUTH) {
             return USER
         }
-        throw Error("Incorect password")
     }
-    throw Error("Incorect email")
+    throw Error("Incorect email or password")
 }
 
 const UserModel = model<IUserSchema, IUserModel>("user", UserSchema)

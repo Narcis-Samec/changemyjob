@@ -1,24 +1,17 @@
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server"
-import testData from "./testDefaultData.json"
-import UserModel from "../models/UserModel"
 
 let mongo: MongoMemoryServer;
 
-// Hooks up the server & data
-beforeAll( async () => {
-
-    //server spooling
+// Spool up the server
+beforeAll(async () => {
     mongo = await MongoMemoryServer.create()
     const uri = mongo.getUri()
     await mongoose.connect(uri)
-
-    //data insertion
-    await UserModel.insertMany([...testData.users])
 })
 
 //mongo & connection kill
-afterAll( async () => {
+afterAll(async () => {
 
     //db clean up
     const collections = await mongoose.connection.db.collections();

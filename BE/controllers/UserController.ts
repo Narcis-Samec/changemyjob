@@ -3,10 +3,11 @@ import UserSpecificsModel from "../models/UserSpecificsModel"
 import Auth from "../middleware/Auth"
 
 //handle errors
+/*
 const handleErrors = (err: any) => {
     console.error(`\x1b[31m[DB]:${err.message}`)
     console.error(`\x1b[31m[DB]:error code:${err.code}`)
-}
+}*/
 
 export default class UserController {
 
@@ -21,7 +22,6 @@ export default class UserController {
             res.status(201).json({userID: USER._id, userDataId: USERDATA._id})
         }
         catch (err: any | unknown) {
-            handleErrors(err)
             res.status(400).json(err)
         }
     }
@@ -36,8 +36,7 @@ export default class UserController {
             res.status(200).json({user: USER._id})
         }
         catch (err: any | unknown) {
-            handleErrors(err)
-            console.log(err)
+            //console.log(err)
             res.status(403).json(err)
         }
     }
