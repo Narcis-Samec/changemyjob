@@ -2,6 +2,7 @@ import { Model, Schema, model } from 'mongoose';
 import validator from "validator"
 import bcryt from "bcryptjs"
 import { Types } from 'mongoose';
+import ErrorInternals from '../utils/ErrorInternals';
 
 export type Role = "creator" | "administrator" | "leadAnalyst" | "analyst" | "user";
 
@@ -79,7 +80,7 @@ UserSchema.statics.login = async function (email: string, password: string) {
             return USER
         }
     }
-    throw Error("Incorect email or password")
+    throw new ErrorInternals.DBNotFoundError("Incorect email or password", "email")
 }
 
 const UserModel = model<IUserSchema, IUserModel>("user", UserSchema)

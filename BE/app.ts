@@ -2,6 +2,10 @@ import 'dotenv/config'
 import mongoose from "mongoose";
 import createServer from "./utils/server"
 
+/**
+ * Welcome to change my job app.ts
+ * @author Alan Kovac
+ */
 const app = createServer()
 
 /* istanbul ignore next */ 
