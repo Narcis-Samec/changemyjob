@@ -15,6 +15,29 @@
             "password": "Kanec420",
             "role": "user",
             "language": "en"
+        },
+        {
+            "name": "MEGA",
+            "surname": "ADMIN",
+            "email": "MEGA@ADMIN.com",
+            "password": "VelkejKanec106",
+            "role": "administrator",
+            "language": "en"
+        },
+        {
+            "name": "ULTRA",
+            "surname": "ADMIN",
+            "email": "ULTRA@ADMIN.com",
+            "password": "VelkejKanec106",
+            "role": "administrator",
+            "language": "en"
+        }
+    ],
+    "dataPumps": [
+        {
+            "name": "Hentai Porn",
+            "producer": "PornHub",
+            "baseUri": "www.pornhub.com/hentai"
         }
     ]
 }
