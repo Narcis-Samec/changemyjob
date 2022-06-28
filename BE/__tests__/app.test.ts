@@ -1,7 +1,10 @@
 import supertest from "supertest"
 import app from "../app"
 
-//basic check if server application is created & running
+/**
+ * Basic check if the server is up & ready
+ * @author Alan Kovac
+ */
 describe("APP TEST:INTEGRATION: given nothing", ()=> {
 
         test("should respond with 200 staus code", async () => {
