@@ -11,6 +11,7 @@ interface IDataPumpsSchema {
     baseUri: string;
     lastRunned?: Date;
     lastFinished?: Date;
+    region: Types.ObjectId | any;
     __v?: number;
 }
 
@@ -43,6 +44,10 @@ const DataPumpsSchema = new Schema<IDataPumpsSchema>({
     },
     lastFinished: {
         type: Date,
+    },
+    region: {
+        type: Types.ObjectId,
+        required: [true, "Region is invalid or empty"]
     },
 },
     {

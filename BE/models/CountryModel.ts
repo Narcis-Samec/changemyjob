@@ -36,7 +36,7 @@ export const CountrySchema = new Schema<ICountry>({
         maxlength: 3,
         minlength: 3,
     },
-    regions: [{ type: Schema.Types.ObjectId, ref: 'regions' }],
+    regions: [{ type: Schema.Types.ObjectId, ref: 'IIII' }],
     locales: {
         cs: {
             countryName: {

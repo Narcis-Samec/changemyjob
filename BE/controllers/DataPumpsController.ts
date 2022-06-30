@@ -23,17 +23,35 @@ export default class DataPumpsController extends BaseController {
         }
     }
 
+    public static async updatePump(req: any, res: any): Promise<void> {
+        const { pumpId } = req.params
+        const { changes } = req.body
+
+        try {
+            await DataPumpsModel.updateOne({ "_id": pumpId }, { $set: { ...changes } })
+            res.sendStatus(204)
+        }
+        catch (err: any | unknown) {
+            res.status(400).json(DataPumpsController.handleErrors(err))
+        }
+    }
+
     public static async runPump(req: { params: { pumpId: string; }; }, res: any) {
         const { pumpId } = req.params
 
         const pumpMeta = await DataPumpsModel.findById({ _id: pumpId })
 
+
         if (!pumpMeta) {
             res.sendStatus(404)
         }
         else {
-            const pump = new CSUPump(pumpMeta.name, pumpMeta.baseUri)
-            const data = pump.runPump()
+            //getting data
+            const pump = new CSUPump(pumpMeta.name, pumpMeta.baseUri, pumpMeta.region)
+            const data = await pump.runPump()
+
+            //writing to DB
+            await RegionsModel.findByIdAndUpdate({ _id: pumpMeta.region }, { $set: { salaryHistory: data } }).catch(err => console.log(err))
 
             res.sendStatus(200)
         }

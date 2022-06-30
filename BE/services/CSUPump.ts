@@ -6,10 +6,12 @@ export default class CSUPump extends BaseDataPump implements IPump {
     name: string
     pathToTable = "#tabData > tbody"
     rawData: any
+    region: string
 
-    constructor(name: string, url: string){
+    constructor(name: string, url: string, region: string){
         super(url)
         this.name = name;
+        this.region = region
     }
 
     async runPump() {
@@ -30,8 +32,6 @@ export default class CSUPump extends BaseDataPump implements IPump {
         const parsedData: Array<{year: number, salary: number}> = years.map((year, index) => {
             return { year: +year, salary: +salaries[index].replace(/\s/g, "") }
         })
-
-        console.log(parsedData)
 
         return parsedData
     }
