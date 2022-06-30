@@ -1,7 +1,7 @@
 import { Error } from "mongoose"
 
 /** 
- * Most controllers will extend this class. It has features that each controller should use in this application, such as {@link handleErrors}.
+ * Most controllers will extend this class. It has features that each controller should use in this application, such as  handleErrors
  * @author Alan Kovac
 */
 export default abstract class BaseController {

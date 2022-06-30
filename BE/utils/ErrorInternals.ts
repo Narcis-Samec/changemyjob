@@ -13,7 +13,7 @@ namespace ErrorInternals {
      */
     abstract class BaseError extends Error {
 
-        constructor(name: string, description: string, toLog: any) {
+        constructor(name: string, description: string, toLog?: any) {
             super(description)
 
             Object.setPrototypeOf(this, new.target.prototype)

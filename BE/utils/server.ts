@@ -22,6 +22,7 @@ export default function createServer() {
     app.post("*", Auth.chcekUser)
     app.get("*", Auth.chcekUser)
     app.patch("*", Auth.chcekUser)
+    app.delete("*", Auth.chcekUser)
 
     /**
      * ROUTES
@@ -30,6 +31,8 @@ export default function createServer() {
     app.use(require('../routes/public/userRoutes'))
     app.use(require('../routes/protected/userSpecificsRoute'))
     app.use(require('../routes/protected/dataPumpsRoutes'))
+    app.use(require('../routes/protected/regionRoutes'))
+    app.use(require('../routes/protected/countryRoutes'))
 
     /**
      * TBD: home route will be separeted

@@ -1,55 +1,74 @@
-import { Schema, model } from 'mongoose';
+import { Schema, Types, model } from 'mongoose';
+import { RegionsSchema } from './RegionsModel';
 
-interface ICountry {
-    _id?: string;
-    countryID: string;
-    countryName: string;
+export interface ICountry {
+    _id?: Types.ObjectId;
+    countryId: string;
     countryCodeCurrency: string;
-    currency: string;
-    countryCodeNumber: number;
+    regions: Array<typeof RegionsSchema>;
+    locales: {
+        cs: {
+            countryName: string;
+            currency: string;
+        },
+        en: {
+            countryName: string;
+            currency: string;
+        }
+    }
 }
 
-const CountrySchema = new Schema<ICountry>({
-    _id: {
+export const CountrySchema = new Schema<ICountry>({
+    countryId: {
         type: String,
-        required: false
-    },
-    countryID: { 
-        type: String, 
         required: true,
         maxlength: 2,
         minlength: 2,
         uppercase: true,
         trim: true,
+        unique: true
     },
-    countryName: { 
-        type: String, 
-        required: true,
-        uppercase: true,
-        trim: true, 
-    },
-    countryCodeCurrency: { 
-        type: String, 
+    countryCodeCurrency: {
+        type: String,
         required: true,
         uppercase: true,
         trim: true,
         maxlength: 3,
         minlength: 3,
     },
-    currency: { 
-        type: String, 
-        required: true,
-        uppercase: true,
-        trim: true, 
-    },
-    countryCodeNumber: { 
-        type: Number, 
-        required: true,
-        trim: true,
-        min: 0,
-        max: 999,
-    },
-});
+    regions: [{ type: Schema.Types.ObjectId, ref: 'regions' }],
+    locales: {
+        cs: {
+            countryName: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+            currency: {
+                type: String,
+                required: true,
+                trim: true,
+            }
+        },
+        en: {
+            countryName: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+            currency: {
+                type: String,
+                required: true,
+                trim: true,
+            }
+        }
+    }
+},
+    {
+        timestamps: true
+    }
+);
+
 
 const CountryModel = model("countries", CountrySchema)
-export = CountryModel
+export default CountryModel
