@@ -6,6 +6,7 @@ interface IDataPumpsSchema {
     name: string;
     status: "NEW" | "WAiTINIG" | "RUNNING" | "ERROR";
     type: "UNKNOWN" | "API" | "SCRAPER";
+    typeName: string;
     producer: string;
     baseUri: string;
     lastRunned?: Date;
@@ -25,6 +26,9 @@ const DataPumpsSchema = new Schema<IDataPumpsSchema>({
     type: {
         type: String, enum: ["UNKNOWN", "API", "SCRAPER"],
         required: [true, "Status is invalid or empty"],
+    },
+    typeName: {
+        type: String,
     },
     producer: {
         type: String,
